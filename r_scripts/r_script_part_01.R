@@ -84,11 +84,8 @@ ar02.dynlm <- dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2),
                     data = data.all.ts,
                     start = c(1962, 1), end = c(2017, 3))
 ct.ar02.dynlm <- coeftest(ar02.dynlm, vcov=vcovHC(ar02.dynlm, type="HC0"))
-
-sink("AR_02_EstRes.txt")
+print("Results AR(2) Model")
 ct.ar02.dynlm
-sink()
-
 # -> see: S&W, 2020, p. 567
 
 # 4.2) ADL Model: 1962-Q1 - 2017-Q3 ----
@@ -136,22 +133,22 @@ X2 <- matrix(rev(window(ter.spr.ts,start=c(2017,2),end=c(2017,3))),ncol=1)
 XX <- rbind(1,X1,X2)
 # Use coefficients of ar01.dynlm
 bet <- matrix(adl.dynlm$coefficients,nrow=1)
-# Check
-XX
-bet
+# # Check
+# XX
+# bet
 # Prediction of 2017 Q4
 for.17.q4.adl <- bet %*% XX
-for.17.q4.adl
+# for.17.q4.adl
 # -> see: S&W, 2020, p. 570
 
 # 5.2) Multiple-step ahead forecast (iterated) (VAR Model) ----
 
 y <- window(data.all.ts, start = c(1980,3), end = c(2017,3))[,c(5,6)]
 var.res <- VAR(y = y, p = 2, type = "const")
-var.res$varresult$GDPGR
-var.res$varresult$TSpread
+# var.res$varresult$GDPGR
+# var.res$varresult$TSpread
 # -> see: S&W, 2020, p. 570
-predict(var.res, n.ahead = 10)
+# predict(var.res, n.ahead = 10)
 # -> see: S&W, 2020, p. 655
 
 # 5.3) Multiple-step ahead forecast (direct) (ADL Model) ----
@@ -167,15 +164,14 @@ tmp <-  dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2) + L(TSpread,1) + L(TSpread,2),
 data.mod.01 <- ts(cbind(tmp$model[,1], 1 , tmp$model[,-1]),
                   frequency = 4, start = c(1960, 1), end = c(2017, 4))
 
-head(data.mod.01)
-class(data.mod.01)
-tsp(data.mod.01)
+# head(data.mod.01)
+# class(data.mod.01)
+# tsp(data.mod.01)
 
 # Regression for direct forecast
 adl.dynlm.tmp <- dynlm(GDPGR ~ L(GDPGR,2) + L(GDPGR,3) + L(TSpread,2) + L(TSpread,3),
                        data = data.all.ts,
                        start = c(1981,1), end = c(2017, 3))
-
 adl.dynlm.tmp
 # -> see: S&W, 2020, p. 657
 
@@ -185,17 +181,17 @@ bet.tmp
 
 # Value predictors
 dat.tmp <- matrix(window(data.mod.01[,-1], start = c(2017, 4), end = c(2017, 4)), ncol = 1)
-dat.tmp
+# dat.tmp
 
 # Prediction
 y.hat <- bet.tmp %*% dat.tmp
-y.hat
+# y.hat
 # -> see: S&W, 2020 p. 657
 
 # Actual
 y.act <- matrix(window(data.mod.01[,1], start = c(2017, 4), end = c(2017, 4)), ncol = 1)
-y.act
+# y.act
 
 # Prediction error
 u.tmp <- y.act -  y.hat
-u.tmp
+# u.tmp
