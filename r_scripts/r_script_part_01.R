@@ -85,8 +85,10 @@ ar02.dynlm <- dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2),
                     start = c(1962, 1), end = c(2017, 3))
 ct.ar02.dynlm <- coeftest(ar02.dynlm, vcov=vcovHC(ar02.dynlm, type="HC0"))
 
-print("Results AR(2) Model (see: S&W, 2020, p. 567)")
+cat("--------------------------------------------------")
+cat("Results AR(2) Model (see: S&W, 2020, p. 567)")
 ct.ar02.dynlm
+cat("--------------------------------------------------")
 # -> see: S&W, 2020, p. 567
 
 # 4.2) ADL Model: 1962-Q1 - 2017-Q3 ----
@@ -95,8 +97,10 @@ adl.dynlm <- dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2) + L(TSpread,1) + L(TSpread,2)
                    start = c(1962, 1), end = c(2017, 3))
 ct.adl.dynlm <- coeftest(adl.dynlm, vcov=vcovHC(adl.dynlm, type="HC1"))
 
-print("Results ADL Model (see: S&W, 2020, p. 570)")
+cat("--------------------------------------------------")
+cat("Results ADL Model (see: S&W, 2020, p. 570)")
 ct.adl.dynlm
+cat("--------------------------------------------------")
 # -> see: S&W, 2020, p. 570
 
 # Compare with results from VAR for same periods
@@ -120,8 +124,10 @@ cat("--------------------------------------------------")
 y <- window(data.all.ts, start = c(1980,3), end = c(2017,3))[,c(5,6)]
 var.res <- VAR(y = y, p = 2, type = "const")
 
-print("Results ADL Model (see: S&W, 2020, p. 653)")
+cat("--------------------------------------------------")
+cat("Results ADL Model (see: S&W, 2020, p. 653)")
 var.res$varresult$GDPGR
+cat("--------------------------------------------------")
 # -> see: S&W, 2020, p. 653 (type for TSpread t-2 coefficient?)
 
 
