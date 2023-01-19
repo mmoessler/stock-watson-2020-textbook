@@ -1,7 +1,7 @@
 
 rm(list = ls())
 
-setwd("C:/Users/Markus/Dropbox/Implementations/GitHub/StockWatson_2020_Textbook/stock-watson-2020-textbook/r_scripts")
+# setwd("C:/Users/Markus/Dropbox/Implementations/GitHub/StockWatson_2020_Textbook/stock-watson-2020-textbook/r_scripts")
 
 library(dynlm)
 
@@ -17,10 +17,16 @@ library(dplyr)
 # 1) Load data and estimated factors ----
 
 # Observable macro variables
-macro.dat <- read.table("../data/us_macro_data.txt",
+# macro.dat <- read.table("../data/us_macro_data.txt",
+#                         header = TRUE,
+#                         sep = ",",
+#                         colClasses = c("character","numeric","numeric","numeric"))
+
+macro.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/data/us_macro_data.txt?token=GHSAT0AAAAAAB4267WKIA2APRRKALMRCYP2Y6JIC6A",
                         header = TRUE,
                         sep = ",",
                         colClasses = c("character","numeric","numeric","numeric"))
+
 # head(macro.dat)
 
 macro.ts <- ts(macro.dat[,-c(1)], frequency = 4, start = c(1955, 2), end = c(2017, 4))
