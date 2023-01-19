@@ -88,7 +88,6 @@ ct.ar02.dynlm <- coeftest(ar02.dynlm, vcov=vcovHC(ar02.dynlm, type="HC0"))
 print("--------------------------------------------------")
 print("Results AR(2) Model (see: S&W, 2020, p. 567)")
 ct.ar02.dynlm
-print("--------------------------------------------------")
 # -> see: S&W, 2020, p. 567
 
 # 4.2) ADL Model: 1962-Q1 - 2017-Q3 ----
@@ -100,7 +99,6 @@ ct.adl.dynlm <- coeftest(adl.dynlm, vcov=vcovHC(adl.dynlm, type="HC1"))
 print("--------------------------------------------------")
 print("Results ADL Model (see: S&W, 2020, p. 570)")
 ct.adl.dynlm
-print("--------------------------------------------------")
 # -> see: S&W, 2020, p. 570
 
 # Compare with results from VAR for same periods
@@ -110,7 +108,6 @@ var.res <- VAR(y = y, p = 2, type = "const")
 print("--------------------------------------------------")
 print("Results VAR Model (compare with ADL model above)")
 var.res$varresult$GDPGR
-print("--------------------------------------------------")
 # -> see: adl.dynlm 
 
 # head(model.frame(var.res$varresult$GDPGR))
@@ -127,7 +124,6 @@ var.res <- VAR(y = y, p = 2, type = "const")
 print("--------------------------------------------------")
 print("Results ADL Model (see: S&W, 2020, p. 653)")
 var.res$varresult$GDPGR
-print("--------------------------------------------------")
 # -> see: S&W, 2020, p. 653 (type for TSpread t-2 coefficient?)
 
 
