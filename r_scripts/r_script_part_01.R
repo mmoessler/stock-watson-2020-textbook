@@ -84,7 +84,11 @@ ar02.dynlm <- dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2),
                     data = data.all.ts,
                     start = c(1962, 1), end = c(2017, 3))
 ct.ar02.dynlm <- coeftest(ar02.dynlm, vcov=vcovHC(ar02.dynlm, type="HC0"))
-print(ct.ar02.dynlm)
+
+sink("AR_02_EstRes.txt")
+ct.ar02.dynlm
+sink()
+
 # -> see: S&W, 2020, p. 567
 
 # 4.2) ADL Model: 1962-Q1 - 2017-Q3 ----
