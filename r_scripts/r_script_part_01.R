@@ -22,7 +22,7 @@ library(dplyr)
 #                         sep = ",",
 #                         colClasses = c("character","numeric","numeric","numeric"))
 
-macro.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/data/us_macro_data.txt?token=GHSAT0AAAAAAB4267WKIA2APRRKALMRCYP2Y6JIC6A",
+macro.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/data/us_macro_data.txt",
                         header = TRUE,
                         sep = ",",
                         colClasses = c("character","numeric","numeric","numeric"))
