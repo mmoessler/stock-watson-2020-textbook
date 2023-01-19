@@ -103,10 +103,10 @@ ct.adl.dynlm
 y <- window(data.all.ts, start = c(1961,3), end = c(2017,3))[,c(5,6)] # you loose 1961-Q3 and 1961-Q4 due to two lags!
 var.res <- VAR(y = y, p = 2, type = "const")
 
-cat("--------------------------------------------------")
-cat("Results VAR Model (compare with ADL model above)")
+print("--------------------------------------------------")
+print("Results VAR Model (compare with ADL model above)")
 var.res$varresult$GDPGR
-cat("--------------------------------------------------")
+print("--------------------------------------------------")
 # -> see: adl.dynlm 
 
 # head(model.frame(var.res$varresult$GDPGR))
