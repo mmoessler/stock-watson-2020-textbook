@@ -5,6 +5,7 @@ rm(list = ls())
 
 library(dplyr) # for data manipulation
 library(lubridate) # for dealing with dates
+# library(tidyverse) # for using tidyverse
 
 library(lmtest) # for robust inference
 library(sandwich)
@@ -95,9 +96,9 @@ FVAR_POOS_function <- function(h, print = FALSE) {
            F03_h_L1 = lag(F03, h),
            F04_h_L1 = lag(F04, h),
            CONST = 1) %>%
-    select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, F01_h_L1, F02_h_L1, F03_h_L1, F04_h_L1, CONST)
+    dplyr::select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, F01_h_L1, F02_h_L1, F03_h_L1, F04_h_L1, CONST)
   # head(data, 10)
-  
+
   
   
   # 3) Prepare periods and POOS-analysis-index-s (see S&W, 2020, p. 575) ----
@@ -147,12 +148,12 @@ FVAR_POOS_function <- function(h, print = FALSE) {
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h)
+      dplyr::select(GDPGR_h)
     y.act[tt] <- as.numeric(y.pre.dat.tmp)
     # extract data for prediction X
     X.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h_L1, GDPGR_h_L2, F01_h_L1, F02_h_L1, F03_h_L1, F04_h_L1, CONST)
+      dplyr::select(GDPGR_h_L1, GDPGR_h_L2, F01_h_L1, F02_h_L1, F03_h_L1, F04_h_L1, CONST)
     # predict y
     y.hat[tt] <- as.numeric(matrix(coef.tmp, nrow = 1)) %*% as.numeric(matrix(X.pre.dat.tmp, ncol = 1))
     # evaluate prediction
@@ -227,7 +228,7 @@ AR_POOS_function <- function(h, print = FALSE) {
            GDPGR_h_L1 = lag(GDPGR_X, h),
            GDPGR_h_L2 = lag(GDPGR_X, h + 1),
            CONST = 1) %>%
-    select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, CONST)
+    dplyr::select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, CONST)
   # head(data, 10)
   
   
@@ -279,12 +280,12 @@ AR_POOS_function <- function(h, print = FALSE) {
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h)
+      dplyr::select(GDPGR_h)
     y.act[tt] <- as.numeric(y.pre.dat.tmp)
     # extract data for prediction X
     X.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h_L1, GDPGR_h_L2, CONST)
+      dplyr::select(GDPGR_h_L1, GDPGR_h_L2, CONST)
     # predict y
     y.hat[tt] <- as.numeric(matrix(coef.tmp, nrow = 1)) %*% as.numeric(matrix(X.pre.dat.tmp, ncol = 1))
     # evaluate prediction
@@ -361,7 +362,7 @@ ADL_POOS_function <- function(h, print=TRUE) {
            TSpread_h_L1 = lag(TSpread, h),
            TSpread_h_L2 = lag(TSpread, h + 1),
            CONST = 1) %>%
-    select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, TSpread_h_L1, TSpread_h_L2, CONST)
+    dplyr::select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, TSpread_h_L1, TSpread_h_L2, CONST)
   # head(data, 10)
   
   
@@ -413,12 +414,12 @@ ADL_POOS_function <- function(h, print=TRUE) {
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h)
+      dplyr::select(GDPGR_h)
     y.act[tt] <- as.numeric(y.pre.dat.tmp)
     # extract data for prediction X
     X.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h_L1, GDPGR_h_L2, TSpread_h_L1, TSpread_h_L2, CONST)
+      dplyr::select(GDPGR_h_L1, GDPGR_h_L2, TSpread_h_L1, TSpread_h_L2, CONST)
     # predict y
     y.hat[tt] <- as.numeric(matrix(coef.tmp, nrow = 1)) %*% as.numeric(matrix(X.pre.dat.tmp, ncol = 1))
     # evaluate prediction
