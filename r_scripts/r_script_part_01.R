@@ -1,14 +1,15 @@
 
+#..................................................
+# 0) Set-up ----
 rm(list = ls())
 
-library(dynlm)
+library(dplyr) # for data manipulation
 
 library(lmtest) # for robust inference
 library(sandwich)
 
+library(dynlm) # for estimation
 library(vars)
-
-library(dplyr)
 
 
 
