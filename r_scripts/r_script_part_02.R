@@ -1,32 +1,16 @@
 
 #..................................................
-# SET-UP ----
-#..................................................
-
-
+# 0) Set-up ----
 rm(list = ls())
 
-# setwd("C:/Users/Markus/Dropbox/Implementations/StockWatson_2020/stock_watson_4E_replication_chapter17/Factor_Estimation")
-setwd("C:/Users/Markus/Dropbox/Implementations/GitHub/StockWatson_2020_Textbook/stock-watson-2020-textbook")
+library(dplyr) # for data manipulation
+library(lubridate) # for dealing with dates
 
-library(R.matlab)
-library(matlab)
-
-library(dynlm)
-library(lmtest)
+library(lmtest) # for robust inference
 library(sandwich)
+
+library(dynlm) # for estimation
 library(vars)
-
-library(tidyverse)
-library(lubridate)
-
-
-
-
-
-#..................................................
-# LOAD / MERGE / PREPARE DATA ----
-#..................................................
 
 
 
@@ -34,32 +18,24 @@ library(lubridate)
 # 1) Load data and estimated factors ----
 
 # Observable macro variables
-macro.dat <- read.table("./data/us_macro_data.txt",
+macro.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/data/us_macro_data.txt",
                         header = TRUE,
                         sep = ",",
-                        colClasses = c("character","numeric","numeric","numeric"))
-head(macro.dat)
+                        colClasses = c("character", "numeric", "numeric", "numeric"))
+# head(macro.dat)
 
 macro.ts <- ts(macro.dat[,-c(1)], frequency = 4, start = c(1955, 2), end = c(2017, 4))
 # dim(macro.ts)
 
-# Unobservable factors
-tmp <- R.matlab::readMat(con = "./data/factor_all_4.mat")
-factor_all_4 <- tmp$factor.all
+# Unobservable/estimated factors
+factor.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/data/factor_all_4.txt",
+                        header = TRUE,
+                        sep = ",",
+                        colClasses = c("character", "numeric", "numeric", "numeric", "numeric"))
+head(factor.dat)
 
-head(factor_all_4)
-tail(factor_all_4)
-
-colnames(factor_all_4) <- c("F01", "F02", "F03", "F04")
-
-write.table(factor_all_4,
-            file = "factor_all_4.txt",
-            sep = ",",
-            row.names = FALSE)
-
-factor.ts <- ts(factor_all_4[-c(1,2),], frequency = 4, start = c(1959, 3), end = c(2017, 4))
-# dim(factor.ts)
-
+factor.ts <- ts(factor.dat[,2:5], frequency = 4, start = c(1959, 3), end = c(2017, 4))
+dim(factor.ts)
 
 
 #..................................................
@@ -76,7 +52,7 @@ data.all.ts <- cbind(date, macro.ts, factor.ts)
 
 # extract time period of interest
 data.all.ts <- window(data.all.ts, start = c(1959, 3), end = c(2017, 4))
-head(data.all.ts)
+# head(data.all.ts)
 
 # transform to data frame
 data.all.df <- data.frame(date = as.Date(data.all.ts[,1]),
@@ -91,21 +67,18 @@ data.all.df <- data.frame(date = as.Date(data.all.ts[,1]),
                           F04     = as.numeric(data.all.ts[,8]))
 # head(data.all.df)
 
-
-
-#..................................................
-# REPLICATION OF TABLE 17.3 ----
-#..................................................
+data.all.df <- data.all.df %>%
+  mutate(GDPGR_X = log(GDP / lag(GDP, 1)))
+# head(data.all.df)
 
 
 
 #..................................................
-# FVAR Model ----
-#..................................................
+# 3) POOS FVAR Model ----
 
-FVAR_POOS_function <- function(h, print=TRUE) {
+FVAR_POOS_function <- function(h, print = FALSE) {
   
-  # # 1) Choose h here! ----
+  # 1) Choose h here! ----
   # h <- 2
   
   
@@ -113,8 +86,10 @@ FVAR_POOS_function <- function(h, print=TRUE) {
   # 2) Prepare data (depends on model!) ----
   data <- data.all.df %>%
     mutate(GDPGR_h = (400/h) * (log(GDP / lag(GDP, h))),
-           GDPGR_h_L1 = lag(GDPGR, h),
-           GDPGR_h_L2 = lag(GDPGR, h + 1),
+           # GDPGR_h_L1 = lag(GDPGR, h),
+           # GDPGR_h_L2 = lag(GDPGR, h + 1),
+           GDPGR_h_L1 = lag(GDPGR_X, h),
+           GDPGR_h_L2 = lag(GDPGR_X, h + 1),
            F01_h_L1 = lag(F01, h),
            F02_h_L1 = lag(F02, h),
            F03_h_L1 = lag(F03, h),
@@ -201,7 +176,8 @@ FVAR_POOS_function <- function(h, print=TRUE) {
     
   }
   
-  MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  # MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  MSFE_POOS <- 1/length(u.til[-seq(1,h),]) * sum(u.til[-seq(1,h),]^2)
   # MSFE_POOS
   
   RMSFE_POOS <- sqrt(MSFE_POOS)
@@ -233,14 +209,12 @@ FVAR_POOS_h8$RMSFE_POOS
 
 
 
-
 #..................................................
-# AR Model ----
-#..................................................
+# 4) POOS AR Model ----
 
-AR_POOS_function <- function(h, print=TRUE) {
+AR_POOS_function <- function(h, print = FALSE) {
   
-  # # 1) Choose h here! ----
+  # 1) Choose h here! ----
   # h <- 2
   
   
@@ -248,8 +222,10 @@ AR_POOS_function <- function(h, print=TRUE) {
   # 2) Prepare data (depends on model!) ----
   data <- data.all.df %>%
     mutate(GDPGR_h = (400/h) * (log(GDP / lag(GDP, h))),
-           GDPGR_h_L1 = lag(GDPGR, h),
-           GDPGR_h_L2 = lag(GDPGR, h + 1),
+           # GDPGR_h_L1 = lag(GDPGR, h),
+           # GDPGR_h_L2 = lag(GDPGR, h + 1),
+           GDPGR_h_L1 = lag(GDPGR_X, h),
+           GDPGR_h_L2 = lag(GDPGR_X, h + 1),
            CONST = 1) %>%
     select(date, GDPGR, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, CONST)
   # head(data, 10)
@@ -332,7 +308,8 @@ AR_POOS_function <- function(h, print=TRUE) {
     
   }
   
-  MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  # MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  MSFE_POOS <- 1/length(u.til[-seq(1,h),]) * sum(u.til[-seq(1,h),]^2)
   # MSFE_POOS
   
   RMSFE_POOS <- sqrt(MSFE_POOS)
@@ -353,7 +330,6 @@ AR_POOS_function <- function(h, print=TRUE) {
 # h=1
 AR_POOS_h1 <- AR_POOS_function(h = 1, print = FALSE)
 AR_POOS_h1$RMSFE_POOS
-tail(AR_POOS_h1$data)
 
 # h=4
 AR_POOS_h4 <- AR_POOS_function(h = 4, print = FALSE)
@@ -365,15 +341,12 @@ AR_POOS_h8$RMSFE_POOS
 
 
 
-
-
 #..................................................
-# ADL Model ----
-#..................................................
+# 5) POOS ADL Model ----
 
 ADL_POOS_function <- function(h, print=TRUE) {
   
-  # # 1) Choose h here! ----
+  # 1) Choose h here! ----
   # h <- 2
   
   
@@ -381,8 +354,10 @@ ADL_POOS_function <- function(h, print=TRUE) {
   # 2) Prepare data (depends on model!) ----
   data <- data.all.df %>%
     mutate(GDPGR_h = (400/h) * (log(GDP / lag(GDP, h))),
-           GDPGR_h_L1 = lag(GDPGR, h),
-           GDPGR_h_L2 = lag(GDPGR, h + 1),
+           # GDPGR_h_L1 = lag(GDPGR, h),
+           # GDPGR_h_L2 = lag(GDPGR, h + 1),
+           GDPGR_h_L1 = lag(GDPGR_X, h),
+           GDPGR_h_L2 = lag(GDPGR_X, h + 1),
            TSpread_h_L1 = lag(TSpread, h),
            TSpread_h_L2 = lag(TSpread, h + 1),
            CONST = 1) %>%
@@ -467,9 +442,10 @@ ADL_POOS_function <- function(h, print=TRUE) {
     
   }
   
-  MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  # MSFE_POOS <- 1/length(u.til) * sum(u.til^2)
+  MSFE_POOS <- 1/length(u.til[-seq(1,h),]) * sum(u.til[-seq(1,h),]^2)
   # MSFE_POOS
-  
+
   RMSFE_POOS <- sqrt(MSFE_POOS)
   # RMSFE_POOS
   
@@ -499,10 +475,15 @@ ADL_POOS_h8$RMSFE_POOS
 
 
 
-# RESULTS ----
+#..................................................
+# 6) Combine results ----
+
 res.df <- data.frame(h01 = c(AR_POOS_h1$RMSFE_POOS, ADL_POOS_h1$RMSFE_POOS, FVAR_POOS_h1$RMSFE_POOS),
                      h04 = c(AR_POOS_h4$RMSFE_POOS, ADL_POOS_h4$RMSFE_POOS, FVAR_POOS_h4$RMSFE_POOS),
                      h08 = c(AR_POOS_h8$RMSFE_POOS, ADL_POOS_h8$RMSFE_POOS, FVAR_POOS_h8$RMSFE_POOS))
 
 rownames(res.df) <- c("AR", "ADL", "FVAR")
-res.df
+
+print("--------------------------------------------------")
+print("Compsrison of Direct Forecasts of Cumulative GDP Growth at an Annual Rate (see: Table 17.3, S&W, 2020, p. 680)")
+round(res.df, 2)
