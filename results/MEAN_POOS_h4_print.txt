@@ -1,0 +1,550 @@
+Step 1 from 61
+   Estimation: From 1981-01-01 to 2001-10-01
+   Prediction: For 2002-10-01
+  Y: 2.01607301509037
+  Y (name): GDPGR_h
+  b: 3.21956007556002
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 2 from 61
+   Estimation: From 1981-01-01 to 2002-01-01
+   Prediction: For 2003-01-01
+  Y: 1.61615361239042
+  Y (name): GDPGR_h
+  b: 3.19821993469626
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 3 from 61
+   Estimation: From 1981-01-01 to 2002-04-01
+   Prediction: For 2003-04-01
+  Y: 1.98959217709345
+  Y (name): GDPGR_h
+  b: 3.17762639956951
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 4 from 61
+   Estimation: From 1981-01-01 to 2002-07-01
+   Prediction: For 2003-07-01
+  Y: 3.16484942054006
+  Y (name): GDPGR_h
+  b: 3.16672932722461
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 5 from 61
+   Estimation: From 1981-01-01 to 2002-10-01
+   Prediction: For 2003-10-01
+  Y: 4.26365744909708
+  Y (name): GDPGR_h
+  b: 3.153653687314
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 6 from 61
+   Estimation: From 1981-01-01 to 2003-01-01
+   Prediction: For 2004-01-01
+  Y: 4.32041780369067
+  Y (name): GDPGR_h
+  b: 3.13637840557328
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 7 from 61
+   Estimation: From 1981-01-01 to 2003-04-01
+   Prediction: For 2004-04-01
+  Y: 4.12711089832303
+  Y (name): GDPGR_h
+  b: 3.12363633636795
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 8 from 61
+   Estimation: From 1981-01-01 to 2003-07-01
+   Prediction: For 2004-07-01
+  Y: 3.37103479541902
+  Y (name): GDPGR_h
+  b: 3.12408922740281
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 9 from 61
+   Estimation: From 1981-01-01 to 2003-10-01
+   Prediction: For 2004-10-01
+  Y: 3.06923673526667
+  Y (name): GDPGR_h
+  b: 3.13647583850818
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 10 from 61
+   Estimation: From 1981-01-01 to 2004-01-01
+   Prediction: For 2005-01-01
+  Y: 3.55613367657001
+  Y (name): GDPGR_h
+  b: 3.14920639727359
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 11 from 61
+   Estimation: From 1981-01-01 to 2004-04-01
+   Prediction: For 2005-04-01
+  Y: 3.34655118562737
+  Y (name): GDPGR_h
+  b: 3.15960963664645
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 12 from 61
+   Estimation: From 1981-01-01 to 2004-07-01
+   Prediction: For 2005-07-01
+  Y: 3.2782923765032
+  Y (name): GDPGR_h
+  b: 3.16183516463353
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 13 from 61
+   Estimation: From 1981-01-01 to 2004-10-01
+   Prediction: For 2005-10-01
+  Y: 2.98754586006728
+  Y (name): GDPGR_h
+  b: 3.16087059766096
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 14 from 61
+   Estimation: From 1981-01-01 to 2005-01-01
+   Prediction: For 2006-01-01
+  Y: 3.12146046870747
+  Y (name): GDPGR_h
+  b: 3.16494547476311
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 15 from 61
+   Estimation: From 1981-01-01 to 2005-04-01
+   Prediction: For 2006-04-01
+  Y: 2.89906918282681
+  Y (name): GDPGR_h
+  b: 3.16679859426173
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 16 from 61
+   Estimation: From 1981-01-01 to 2005-07-01
+   Prediction: For 2006-07-01
+  Y: 2.15189174225693
+  Y (name): GDPGR_h
+  b: 3.16792479408235
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 17 from 61
+   Estimation: From 1981-01-01 to 2005-10-01
+   Prediction: For 2006-10-01
+  Y: 2.36166118566766
+  Y (name): GDPGR_h
+  b: 3.1661210047422
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 18 from 61
+   Estimation: From 1981-01-01 to 2006-01-01
+   Prediction: For 2007-01-01
+  Y: 1.22919102595771
+  Y (name): GDPGR_h
+  b: 3.1656788212171
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 19 from 61
+   Estimation: From 1981-01-01 to 2006-04-01
+   Prediction: For 2007-04-01
+  Y: 1.69282887420568
+  Y (name): GDPGR_h
+  b: 3.16306500123288
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 20 from 61
+   Estimation: From 1981-01-01 to 2006-07-01
+   Prediction: For 2007-07-01
+  Y: 2.27377090777961
+  Y (name): GDPGR_h
+  b: 3.15324778512632
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 21 from 61
+   Estimation: From 1981-01-01 to 2006-10-01
+   Prediction: For 2007-10-01
+  Y: 1.85037859416709
+  Y (name): GDPGR_h
+  b: 3.14563637551614
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 22 from 61
+   Estimation: From 1981-01-01 to 2007-01-01
+   Prediction: For 2008-01-01
+  Y: 1.10367755700583
+  Y (name): GDPGR_h
+  b: 3.12738451504416
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 23 from 61
+   Estimation: From 1981-01-01 to 2007-04-01
+   Prediction: For 2008-04-01
+  Y: 0.836813903611199
+  Y (name): GDPGR_h
+  b: 3.11385097126266
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 24 from 61
+   Estimation: From 1981-01-01 to 2007-07-01
+   Prediction: For 2008-07-01
+  Y: -0.313938087770942
+  Y (name): GDPGR_h
+  b: 3.10599975571609
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 25 from 61
+   Estimation: From 1981-01-01 to 2007-10-01
+   Prediction: For 2008-10-01
+  Y: -2.80584026351468
+  Y (name): GDPGR_h
+  b: 3.0943736338499
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 26 from 61
+   Estimation: From 1981-01-01 to 2008-01-01
+   Prediction: For 2009-01-01
+  Y: -3.51610696151921
+  Y (name): GDPGR_h
+  b: 3.07611036708986
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 27 from 61
+   Estimation: From 1981-01-01 to 2008-04-01
+   Prediction: For 2009-04-01
+  Y: -4.14671614775936
+  Y (name): GDPGR_h
+  b: 3.05575312651278
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 28 from 61
+   Estimation: From 1981-01-01 to 2008-07-01
+   Prediction: For 2009-07-01
+  Y: -3.3399977442232
+  Y (name): GDPGR_h
+  b: 3.02539554800572
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 29 from 61
+   Estimation: From 1981-01-01 to 2008-10-01
+   Prediction: For 2009-10-01
+  Y: -0.240970873520664
+  Y (name): GDPGR_h
+  b: 2.97333094254572
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 30 from 61
+   Estimation: From 1981-01-01 to 2009-01-01
+   Prediction: For 2010-01-01
+  Y: 1.58614841230106
+  Y (name): GDPGR_h
+  b: 2.91590228852744
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 31 from 61
+   Estimation: From 1981-01-01 to 2009-04-01
+   Prediction: For 2010-04-01
+  Y: 2.68301316611858
+  Y (name): GDPGR_h
+  b: 2.85394949522668
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 32 from 61
+   Estimation: From 1981-01-01 to 2009-07-01
+   Prediction: For 2010-07-01
+  Y: 3.02937542004217
+  Y (name): GDPGR_h
+  b: 2.80008908444886
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 33 from 61
+   Estimation: From 1981-01-01 to 2009-10-01
+   Prediction: For 2010-10-01
+  Y: 2.69411036612398
+  Y (name): GDPGR_h
+  b: 2.77387305032843
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 34 from 61
+   Estimation: From 1981-01-01 to 2010-01-01
+   Prediction: For 2011-01-01
+  Y: 1.87521353990669
+  Y (name): GDPGR_h
+  b: 2.76372155769572
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 35 from 61
+   Estimation: From 1981-01-01 to 2010-04-01
+   Prediction: For 2011-04-01
+  Y: 1.63863092641251
+  Y (name): GDPGR_h
+  b: 2.76303758827557
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 36 from 61
+   Estimation: From 1981-01-01 to 2010-07-01
+   Prediction: For 2011-07-01
+  Y: 1.17651815342558
+  Y (name): GDPGR_h
+  b: 2.76527572131563
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 37 from 61
+   Estimation: From 1981-01-01 to 2010-10-01
+   Prediction: For 2011-10-01
+  Y: 1.66787938278178
+  Y (name): GDPGR_h
+  b: 2.76468267668903
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 38 from 61
+   Estimation: From 1981-01-01 to 2011-01-01
+   Prediction: For 2012-01-01
+  Y: 2.71612505729017
+  Y (name): GDPGR_h
+  b: 2.75733169208752
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 39 from 61
+   Estimation: From 1981-01-01 to 2011-04-01
+   Prediction: For 2012-04-01
+  Y: 2.45703167070093
+  Y (name): GDPGR_h
+  b: 2.74816201368035
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 40 from 61
+   Estimation: From 1981-01-01 to 2011-07-01
+   Prediction: For 2012-07-01
+  Y: 2.36609669488255
+  Y (name): GDPGR_h
+  b: 2.73538442132056
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 41 from 61
+   Estimation: From 1981-01-01 to 2011-10-01
+   Prediction: For 2012-10-01
+  Y: 1.26904149837251
+  Y (name): GDPGR_h
+  b: 2.72677550971944
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 42 from 61
+   Estimation: From 1981-01-01 to 2012-01-01
+   Prediction: For 2013-01-01
+  Y: 1.30491776377004
+  Y (name): GDPGR_h
+  b: 2.7266903061
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 43 from 61
+   Estimation: From 1981-01-01 to 2012-04-01
+   Prediction: For 2013-04-01
+  Y: 1.03060188179079
+  Y (name): GDPGR_h
+  b: 2.72455015820001
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 44 from 61
+   Estimation: From 1981-01-01 to 2012-07-01
+   Prediction: For 2013-07-01
+  Y: 1.67970451021449
+  Y (name): GDPGR_h
+  b: 2.72172768998491
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 45 from 61
+   Estimation: From 1981-01-01 to 2012-10-01
+   Prediction: For 2013-10-01
+  Y: 2.62810435612181
+  Y (name): GDPGR_h
+  b: 2.71037857911294
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 46 from 61
+   Estimation: From 1981-01-01 to 2013-01-01
+   Prediction: For 2014-01-01
+  Y: 1.70049981350879
+  Y (name): GDPGR_h
+  b: 2.69948353403276
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 47 from 61
+   Estimation: From 1981-01-01 to 2013-04-01
+   Prediction: For 2014-04-01
+  Y: 2.63397586151099
+  Y (name): GDPGR_h
+  b: 2.68664598286167
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 48 from 61
+   Estimation: From 1981-01-01 to 2013-07-01
+   Prediction: For 2014-07-01
+  Y: 3.13533354407429
+  Y (name): GDPGR_h
+  b: 2.67895940673459
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 49 from 61
+   Estimation: From 1981-01-01 to 2013-10-01
+   Prediction: For 2014-10-01
+  Y: 2.66331730281916
+  Y (name): GDPGR_h
+  b: 2.67857414119965
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 50 from 61
+   Estimation: From 1981-01-01 to 2014-01-01
+   Prediction: For 2015-01-01
+  Y: 3.6905177754883
+  Y (name): GDPGR_h
+  b: 2.67122019888618
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 51 from 61
+   Estimation: From 1981-01-01 to 2014-04-01
+   Prediction: For 2015-04-01
+  Y: 3.24174841547425
+  Y (name): GDPGR_h
+  b: 2.67094225606995
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 52 from 61
+   Estimation: From 1981-01-01 to 2014-07-01
+   Prediction: For 2015-07-01
+  Y: 2.37604352612157
+  Y (name): GDPGR_h
+  b: 2.67438219153665
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 53 from 61
+   Estimation: From 1981-01-01 to 2014-10-01
+   Prediction: For 2015-10-01
+  Y: 1.99834890037108
+  Y (name): GDPGR_h
+  b: 2.67430083206078
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 54 from 61
+   Estimation: From 1981-01-01 to 2015-01-01
+   Prediction: For 2016-01-01
+  Y: 1.34626950511193
+  Y (name): GDPGR_h
+  b: 2.68171847398361
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 55 from 61
+   Estimation: From 1981-01-01 to 2015-04-01
+   Prediction: For 2016-04-01
+  Y: 1.22344553787374
+  Y (name): GDPGR_h
+  b: 2.68577666196543
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 56 from 61
+   Estimation: From 1981-01-01 to 2015-07-01
+   Prediction: For 2016-07-01
+  Y: 1.50464012946575
+  Y (name): GDPGR_h
+  b: 2.68354836602411
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 57 from 61
+   Estimation: From 1981-01-01 to 2015-10-01
+   Prediction: For 2016-10-01
+  Y: 1.81927018409079
+  Y (name): GDPGR_h
+  b: 2.67865408412659
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 58 from 61
+   Estimation: From 1981-01-01 to 2016-01-01
+   Prediction: For 2017-01-01
+  Y: 1.98165619998871
+  Y (name): GDPGR_h
+  b: 2.66920454810521
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 59 from 61
+   Estimation: From 1981-01-01 to 2016-04-01
+   Prediction: For 2017-04-01
+  Y: 2.18185448534698
+  Y (name): GDPGR_h
+  b: 2.6590231466247
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 60 from 61
+   Estimation: From 1981-01-01 to 2016-07-01
+   Prediction: For 2017-07-01
+  Y: 2.27306659331773
+  Y (name): GDPGR_h
+  b: 2.6509505381131
+  b (name): CONST
+  X: 1
+  X (name): CONST
+Step 61 from 61
+   Estimation: From 1981-01-01 to 2016-10-01
+   Prediction: For 2017-10-01
+  Y: 2.46345134609956
+  Y (name): GDPGR_h
+  b: 2.64517498009906
+  b (name): CONST
+  X: 1
+  X (name): CONST
+[1] 2.060715
