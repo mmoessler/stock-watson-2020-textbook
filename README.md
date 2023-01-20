@@ -34,3 +34,8 @@ Extension of Table 17.3 with unconditional mean forecast.
 source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/r_scripts/r_script_part_03.R", print.eval=TRUE)
 
 ```
+
+# Next Steps
+
+* Use actual PCA to construct/estimate unobserved factors.
+* Replication of the construction of the unbobserved, i.e., estimated factors.
