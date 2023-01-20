@@ -1,5 +1,5 @@
 
-# Replication of the results of Table 17.3 of Chatper 17 of S&" 2020
+# Replication of of Table 17.3 of Chatper 17 of S&W 2020
 
 ## Factors Estimation
 
