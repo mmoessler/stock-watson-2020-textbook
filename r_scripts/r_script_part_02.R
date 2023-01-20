@@ -6,7 +6,8 @@
 
 rm(list = ls())
 
-setwd("C:/Users/Markus/Dropbox/Implementations/StockWatson_2020/stock_watson_4E_replication_chapter17/Factor_Estimation")
+# setwd("C:/Users/Markus/Dropbox/Implementations/StockWatson_2020/stock_watson_4E_replication_chapter17/Factor_Estimation")
+setwd("C:/Users/Markus/Dropbox/Implementations/GitHub/StockWatson_2020_Textbook/stock-watson-2020-textbook")
 
 library(R.matlab)
 library(matlab)
@@ -33,19 +34,28 @@ library(lubridate)
 # 1) Load data and estimated factors ----
 
 # Observable macro variables
-macro.dat <- read.table("us_macro_data.txt",
+macro.dat <- read.table("./data/us_macro_data.txt",
                         header = TRUE,
                         sep = ",",
                         colClasses = c("character","numeric","numeric","numeric"))
-# head(macro.dat)
+head(macro.dat)
 
 macro.ts <- ts(macro.dat[,-c(1)], frequency = 4, start = c(1955, 2), end = c(2017, 4))
 # dim(macro.ts)
 
 # Unobservable factors
-tmp <- R.matlab::readMat(con = "./factor_all_4.mat")
+tmp <- R.matlab::readMat(con = "./data/factor_all_4.mat")
 factor_all_4 <- tmp$factor.all
-# head(factor_all_4)
+
+head(factor_all_4)
+tail(factor_all_4)
+
+colnames(factor_all_4) <- c("F01", "F02", "F03", "F04")
+
+write.table(factor_all_4,
+            file = "factor_all_4.txt",
+            sep = ",",
+            row.names = FALSE)
 
 factor.ts <- ts(factor_all_4[-c(1,2),], frequency = 4, start = c(1959, 3), end = c(2017, 4))
 # dim(factor.ts)
