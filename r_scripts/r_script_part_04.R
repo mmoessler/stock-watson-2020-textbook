@@ -72,6 +72,72 @@ data.all.df <- data.all.df %>%
   mutate(GDPGR_X = log(GDP / lag(GDP, 1)))
 # head(data.all.df)
 
+# # Check this transformation
+# dat.fra <- data.all.df
+# 
+# head(dat.fra)
+# 
+# col.nam.sel <- c("GDPGR", "GDPGR", "TSpread", "TSpread")
+# col.nam.out <- c("GDPGR_L01", "GDPGR_L02", "TSpread_L0", "TSpread_L02")
+# n.inp <- c(1, 2, 1, 2)
+# 
+# for (ii in 1:length(col.nam.sel)) {
+#   
+#   x <- dat.fra[,which(names(dat.fra) %in% col.nam.sel[ii])]
+#   dat.fra <- cbind(dat.fra,
+#                    setNames(
+#                      as.data.frame(
+#                        do.call(
+#                          "lag", args = list(x = x, n = n.inp[ii]))), col.nam.out[ii]))
+#   
+# }
+# 
+# head(dat.fra)
+
+dat_tra_fun <- function(dat.fra, col.nam.inp, col.nam.out, n.inp, col.nam.sel){
+  
+  # dat.fra <- data.all.df
+  # 
+  # head(dat.fra)
+  # 
+  # col.nam.inp <- c("GDPGR", "GDPGR", "TSpread", "TSpread")
+  # col.nam.out <- c("GDPGR_h_L1", "GDPGR_h_L2", "TSpread_h_L1", "TSpread_h_L2")
+  # col.nam.sel <- c("date", "GDPGR", "GDPGR_h", "GDPGR_h_L1", "GDPGR_h_L2", "TSpread_h_L1", "TSpread_h_L2")
+  # n.inp <- c(1, 2, 1, 2)
+  
+  
+  
+  for (ii in 1:length(col.nam.inp)) {
+    
+    x <- dat.fra[,which(names(dat.fra) %in% col.nam.inp[ii])]
+    dat.fra <- cbind(dat.fra,
+                     setNames(
+                       as.data.frame(
+                         do.call(
+                           "lag", args = list(x = x, n = n.inp[ii]))), col.nam.out[ii]))
+    
+  }
+  
+  dat.fra <- dat.fra[,which(names(dat.fra) %in% col.nam.sel)]
+  
+  # head(dat.fra)
+  
+  return(dat.fra)
+  
+}
+
+dat.fra <- data.all.df
+col.nam.inp <- c("GDPGR", "GDPGR", "TSpread", "TSpread")
+col.nam.out <- c("GDPGR_h_L1", "GDPGR_h_L2", "TSpread_h_L1", "TSpread_h_L2")
+col.nam.sel <- c("date", "GDPGR", "GDPGR_h", "GDPGR_h_L1", "GDPGR_h_L2", "TSpread_h_L1", "TSpread_h_L2")
+n.inp <- c(1, 2, 1, 2)
+
+data <- dat_tra_fun(dat.fra, col.nam.inp, col.nam.out, n.inp, col.nam.sel)
+
+head(data)
+
+
+
 
 
 #..................................................
@@ -1035,6 +1101,10 @@ lagofcol <- function(df, col, n) {
   # mutate(df, paste("Lag of {{col}} ", n, sep = "") := lag({{col}},n))
   
 }
+
+# see also: https://community.rstudio.com/t/using-dplyr-to-generate-multiple-lags/97563
+# and: https://gist.github.com/drsimonj/2038ff9f9c67063f384f10fac95de566
+
 
 ADL_0101_POOS_function <- function(h, print = TRUE) {
   
