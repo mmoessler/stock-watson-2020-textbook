@@ -25,13 +25,23 @@ source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/m
 
 ```
 
-### Part 2
+### Part 3
 
 Extension of Table 17.3 with unconditional mean forecast.
 
 ```
 
 source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/r_scripts/r_script_part_03.R", print.eval=TRUE)
+
+```
+
+### Part 4
+
+Extension of Table 17.3 with POSS for other AR and ADL model forecasts.
+
+```
+
+source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/r_scripts/r_script_part_04.R", print.eval=TRUE)
 
 ```
 
