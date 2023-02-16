@@ -200,6 +200,8 @@ FVAR_POOS_function <- function(h, print = FALSE) {
   y.act <- matrix(NA, nrow = length(s.ii.seq.h))
   u.til <- matrix(NA, nrow = length(s.ii.seq.h))
   
+  coef.lis <- list() 
+  
   for (tt in 1:length(s.ii.seq.h)) {
     
     # moving POOS-analysis-index-s
@@ -211,6 +213,7 @@ FVAR_POOS_function <- function(h, print = FALSE) {
     # estimate model
     coef.tmp <- lm(GDPGR_h ~ GDPGR_h_L1 + GDPGR_h_L2 + F01_h_L1 + F02_h_L1 + F03_h_L1 + F04_h_L1 + CONST - 1,
                    data = est.dat.tmp)$coefficients
+    coef.lis[[tt]] <- coef.tmp
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
@@ -256,7 +259,8 @@ FVAR_POOS_function <- function(h, print = FALSE) {
                   data = data,
                   y.act = y.act,
                   y.hat = y.hat,
-                  u.til = u.til)
+                  u.til = u.til,
+                  coef.lis = coef.lis)
   
   return(ret.lis)
   
@@ -332,6 +336,8 @@ AR_POOS_function <- function(h, print = FALSE) {
   y.act <- matrix(NA, nrow = length(s.ii.seq.h))
   u.til <- matrix(NA, nrow = length(s.ii.seq.h))
   
+  coef.lis <- list() 
+  
   for (tt in 1:length(s.ii.seq.h)) {
     
     # moving POOS-analysis-index-s
@@ -343,6 +349,7 @@ AR_POOS_function <- function(h, print = FALSE) {
     # estimate model
     coef.tmp <- lm(GDPGR_h ~ GDPGR_h_L1 + GDPGR_h_L2 + CONST - 1,
                    data = est.dat.tmp)$coefficients
+    coef.lis[[tt]] <- coef.tmp
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
@@ -388,7 +395,8 @@ AR_POOS_function <- function(h, print = FALSE) {
                   data = data,
                   y.act = y.act,
                   y.hat = y.hat,
-                  u.til = u.til)
+                  u.til = u.til,
+                  coef.lis = coef.lis)
   
   return(ret.lis)
   
@@ -466,6 +474,8 @@ ADL_POOS_function <- function(h, print = TRUE) {
   y.act <- matrix(NA, nrow = length(s.ii.seq.h))
   u.til <- matrix(NA, nrow = length(s.ii.seq.h))
   
+  coef.lis <- list() 
+  
   for (tt in 1:length(s.ii.seq.h)) {
     
     # moving POOS-analysis-index-s
@@ -477,6 +487,7 @@ ADL_POOS_function <- function(h, print = TRUE) {
     # estimate model
     coef.tmp <- lm(GDPGR_h ~ GDPGR_h_L1 + GDPGR_h_L2 + TSpread_h_L1 + TSpread_h_L2 + CONST - 1,
                    data = est.dat.tmp)$coefficients
+    coef.lis[[tt]] <- coef.tmp
     # extract data for prediction Y
     y.pre.dat.tmp <- data %>%
       filter(date == all.per[pre.sta + tt]) %>%
@@ -522,14 +533,15 @@ ADL_POOS_function <- function(h, print = TRUE) {
                   data = data,
                   y.act = y.act,
                   y.hat = y.hat,
-                  u.til = u.til)
+                  u.til = u.til,
+                  coef.lis = coef.lis)
   
   return(ret.lis)
   
 }
 
 # h=1
-ADL_POOS_h1 <- ADL_POOS_function(h = 1, print = FALSE)
+ADL_POOS_h1 <- ADL_POOS_function(h = 1, print = TRUE)
 ADL_POOS_h1$RMSFE_POOS
 
 # h=4
@@ -2099,3 +2111,8 @@ rownames(res.df) <- c("MEAN", "AR(1)", "AR(2)", "AR(3)", "AR(4)", "ADL(1,1)", "A
 print("--------------------------------------------------")
 print("Compsrison of Direct Forecasts of Cumulative GDP Growth at an Annual Rate")
 round(res.df, 3)
+
+#..................................................
+# XX) Parameter estimates (not too meaningful!) ----
+
+ADL_POOS_h1$coef.lis[length(ADL_POOS_h1$coef.lis)]
