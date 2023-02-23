@@ -2125,13 +2125,13 @@ ADL_POOS_h1$coef.lis[length(ADL_POOS_h1$coef.lis)]
 
 # Conduct plain estimation ----
 
-head(data.all.df)
-tail(data.all.df)
+# head(data.all.df)
+# tail(data.all.df)
 
 data.all.ts <- ts(data.all.df[,-c(1,2,3)], frequency = 4, start = c(1959, 3), end = c(2017, 4))
 
-head(data.all.ts)
-tail(data.all.ts)
+# head(data.all.ts)
+# tail(data.all.ts)
 
 # X.X) FAVAR Model: 1962-Q1 - 2017-Q3 ----
 favar.dynlm <- dynlm(GDPGR ~ L(F01,1) + L(F02,1) + L(F03,1) + L(F04,1) + L(GDPGR,1) + L(GDPGR,2),
@@ -2140,5 +2140,5 @@ favar.dynlm <- dynlm(GDPGR ~ L(F01,1) + L(F02,1) + L(F03,1) + L(F04,1) + L(GDPGR
 ct.favar.dynlm <- coeftest(favar.dynlm, vcov=vcovHC(favar.dynlm, type="HC1"))
 
 print("--------------------------------------------------")
-print("Results FAVAR Model (not in S&W)")
+print("Results FAVAR Model (1962-Q1 - 2017-Q3; not in S&W)")
 ct.favar.dynlm
