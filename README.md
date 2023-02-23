@@ -45,6 +45,16 @@ source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/m
 
 ```
 
+### Part 5
+
+Estimation results for FAVAR model for comparison with AR and ADL models (part 1).
+
+```
+
+source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/r_scripts/r_script_part_05.R", print.eval=TRUE)
+
+```
+
 # Next Steps
 
 * Use actual PCA to construct/estimate unobserved factors.
