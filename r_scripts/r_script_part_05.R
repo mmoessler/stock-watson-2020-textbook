@@ -33,10 +33,10 @@ factor.dat <- read.table("https://raw.githubusercontent.com/mmoessler/stock-wats
                         header = TRUE,
                         sep = ",",
                         colClasses = c("character", "numeric", "numeric", "numeric", "numeric"))
-head(factor.dat)
+# head(factor.dat)
 
 factor.ts <- ts(factor.dat[,2:5], frequency = 4, start = c(1959, 3), end = c(2017, 4))
-dim(factor.ts)
+# dim(factor.ts)
 
 
 #..................................................
@@ -134,7 +134,7 @@ n.inp <- c(1, 2, 1, 2)
 
 data <- dat_tra_fun(dat.fra, col.nam.inp, col.nam.out, n.inp, col.nam.sel)
 
-head(data)
+# head(data)
 
 
 
