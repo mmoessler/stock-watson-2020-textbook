@@ -99,10 +99,10 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
     
     # 4.1) regression over ns ----
     
-    # regress all N (T x 1) columns of X on the (T x r) factor scores (f) to get (N x r) factor loading (lambda)
+    # regress each of the N columns of X (T x 1) on the (T x r) factor scores (f) to get (N x r) factor loading (lambda)
     for (i in 1:ns) {
       
-      tmp <- t(packr(t(cbind(xdata.std[,i, drop = FALSE], fac))))
+      tmp <- t(packr(t(cbind(xdata.std[,i, drop = FALSE], fac)))) # note delete rows/t's with NAs
       
       if (dim(tmp)[1] >= nt.min) {
         
@@ -117,10 +117,10 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
     
     # 4.2) regression over nt ----
     
-    # regress all T (N x 1) rows of X on the (N x r) factor loading (lambda) to get (N x r) factor scores (f)
+    # regress each of the T rows of X (N x 1)  on the (N x r) factor loadings (lambda) to get (N x r) factor scores (f)
     for (t in 1:nt) {
       
-      tmp <- t(packr(t(cbind(t(xdata.std[t, , drop = FALSE]), lam))))
+      tmp <- t(packr(t(cbind(t(xdata.std[t,, drop = FALSE]), lam)))) # note delete columns/i's with NAs
       
       y <- tmp[,1, drop = FALSE]
       x <- tmp[,2:ncol(tmp), drop = FALSE]
@@ -153,6 +153,9 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
 
 # determine the start and end of period for factor estimation
 dat.seq <- seq.Date(from = as.Date("1955-04-01"), to = as.Date("2017-10-01"), by = "quarter")
+
+print("--------------------------------------------------")
+print("Start and end for estimation of unobserved factors")
 dat.seq[3]   # start used
 dat.seq[236] # end used
 
@@ -171,8 +174,6 @@ TT <- length(date)
 
 # merge all variables/factors
 data.all.ts <- cbind(date, macro.01.ts, factor.est.ts, macro.02.ts) # based on estimated factors
-
-dim(data.all.ts)
 
 # extract time period of interest
 data.all.ts <- window(data.all.ts, start = c(1959, 3), end = c(2017, 4))
@@ -303,12 +304,21 @@ FVAR_POOS_function <- function(h, print = FALSE) {
 
 # h=1
 FVAR_POOS_h1 <- FVAR_POOS_function(h = 1, print = FALSE)
+
+print("--------------------------------------------------")
+print("FVAR POOS for h=1")
 FVAR_POOS_h1$RMSFE_POOS
 
 # h=4
 FVAR_POOS_h4 <- FVAR_POOS_function(h = 4, print = FALSE)
+
+print("--------------------------------------------------")
+print("FVAR POOS for h=4")
 FVAR_POOS_h4$RMSFE_POOS
 
 # h=8
+
+print("--------------------------------------------------")
+print("FVAR POOS for h=8")
 FVAR_POOS_h8 <- FVAR_POOS_function(h = 8, print = FALSE)
 FVAR_POOS_h8$RMSFE_POOS
