@@ -1,0 +1,47 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# DFM specification
+
+## Dynamic DFM specification
+
+\begin{align*}
+
+\underset{\left(N\times 1\right)}{X_{t}} &= \underset{\left(N\times q\right)}{\lambda\left(L\right)^{'}} \underset{\left(q\times 1\right)}{f_t} + \underset{\left(N\times 1\right)}{e_{t}} \\
+
+\underset{\left(q\times 1\right)}{f_{t}} &= \underset{\left(q\times q\right)}{\Psi\left(L\right)} \underset{\left(q\times 1\right)}{f_{t-1}} + \underset{\left(q\times 1\right)}{\eta_{t}}
+
+\end{align*}
+
+with
+
+\begin{align*}
+
+\underset{\left(N\times q\right)}{\lambda\left(L\right)} &= \underset{\left(N\times q\right)}{\left(1 + \lambda_{1}L + \lambda_{2}L^{2} + ... + \lambda_{p_{\lambda}}L^{p_{\lambda}} \right)} \\
+
+\underset{\left(q\times q\right)}{\Psi\left(L\right)} &= \underset{\left(q\times q\right)}{\left(1 + \Psi_{1}L + \Psi_{2}L^{2} + ... + \Psi_{p_{\Psi}}L^{p_{\Psi}} \right)}
+
+\end{align*}
+
+where
+
+* $e_t$: Idiosyncratic disturbances, potentially serially correlated but uncorrelated with the factor innovations at all leads and lags, i.e., $\text{E}\left(e_t \eta^{'}_{t-k} = 0\right)$ for all $k$
+* $\eta_t$: Serially uncorrelated mean-zero innovations to the factors
+* $\lambda_{i}\left(L\right)$: Vector lag polynomial called "dynamic factor loadings"
+
+## Static/Stacked DFM specification
+
+\begin{align*}
+
+\underset{\left(N \times 1\right)}{X_t} &= \underset{\left(N \times qp\right)}{\Lambda}\underset{\left(qp \times 1\right)}{F_t} + \underset{\left(N \times 1\right)}{e_t} \\
+
+\underset{\left(qp \times 1\right)}{F_t} &= \underset{\left(qp \times qp\right)}{\Phi\left(L\right)} \underset{\left(qp \times 1\right)}{F_{t-1}} + \underset{\left(qp \times q\right)}{G}\underset{\left(q \times 1\right)}{\eta} \\
+
+\underset{\left(r \times 1\right)}{F_t} &= \underset{\left(r \times r\right)}{\Phi\left(L\right)} \underset{\left(r \times 1\right)}{F_{t-1}} + \underset{\left(r \times q\right)}{G}\underset{\left(q \times 1\right)}{\eta}
+
+\end{align*}
