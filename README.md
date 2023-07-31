@@ -47,13 +47,20 @@ source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/m
 
 ### Part 5
 
-Estimation results for FAVAR model for comparison with AR and ADL models (part 1).
+Extension of Part 2 to Part 4 with the estimation of the unobserved factors and DFM parameters.
+
+Note, there are different strategies to estimate the unobserved factors and DFM parameters. In the textbook S&W propose to estimate the unobserved factors by the principal components of the observed variables. This strategy is a nonparametric method and is based on cross-sectional averaging. (see Stock and Watson (2016)). Parameteric methods are state-space methods.
 
 ```
 
-source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/r_scripts/r_script_part_05.R", print.eval=TRUE)
+source("https://raw.githubusercontent.com/mmoessler/stock-watson-2020-textbook/main/ch-17-06/dfm_script_01.R", print.eval=TRUE)
 
 ```
+
+<!--  
+* Stock, J. H., & Watson, M. W. (2016). Dynamic factor models, factor-augmented vector autoregressions, and structural vector autoregressions in macroeconomics. In *Handbook of macroeconomics* (Vol. 2, pp. 415-525). Elsevier. *Ch.: 2.3*.
+* Kilian, L., & Lütkepohl, H. (2017). *Structural vector autoregressive analysis*. Cambridge University Press. *Ch.: 16*.
+-->
 
 # Next Steps
 
