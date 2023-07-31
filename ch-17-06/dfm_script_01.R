@@ -64,9 +64,8 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
 
   # 2) standardization ----
   xmean <- as.matrix(colMeans(xdata, na.rm = TRUE)) # mean across rows for each column % mean (ignoring NaN)
-  # mult <- sqrt((sum(!is.na(xdata))-1)/sum(!is.na(xdata))) # % num of non-NaN entries for each series
-  mult <- sqrt((colSums(!is.na(xdata))-1)/colSums(!is.na(xdata))) # % num of non-NaN entries for each series
-  xstd <- as.matrix(apply(xdata, 2, sd, na.rm = TRUE) * mult) # % std (ignoring NaN)
+  mult <- sqrt((colSums(!is.na(xdata))-1)/colSums(!is.na(xdata))) # num of non-NaN entries for each series
+  xstd <- as.matrix(apply(xdata, 2, sd, na.rm = TRUE) * mult) # std (ignoring NaN)
   xdata.std <- (xdata - (t(xmean) %x% matrix(1, nrow = nt))) / (t(xstd) %x% matrix(1, nrow = nt))
   
   # exclude columns with missing values
@@ -152,7 +151,7 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
   
 }
 
-# determine the srart and end of period for factor estimation
+# determine the start and end of period for factor estimation
 dat.seq <- seq.Date(from = as.Date("1955-04-01"), to = as.Date("2017-10-01"), by = "quarter")
 dat.seq[3]   # start used
 dat.seq[236] # end used
