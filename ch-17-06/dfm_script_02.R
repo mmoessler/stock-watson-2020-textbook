@@ -3,10 +3,6 @@
 # Set-up ----
 rm(list = ls())
 
-# libraries
-library(dplyr) # for data manipulation
-library(lubridate) # for dealing with dates
-
 # functions
 repmat <- function(X, nc) {
   
@@ -32,6 +28,56 @@ inv <- function(x) {
   solve(x)
   
 }
+
+# R helper function data preparation 1
+lag_fun <- function(x, lag) {
+  
+  # x <- data.01$GDP
+  # x <- seq(1,10)
+  # lag <- 1
+  
+  
+  if (lag >= 1) {
+    c(rep(NA, lag), x[-seq(length(x), length(x)-lag+1)])
+  } else {
+    c(x[-seq(1, -lag)], rep(NA, -lag))
+  }
+  
+}
+
+# R helper function data preparation 2
+dat_man_fun <- function(dat.fra, arg.lis, col.nam.sel, col.nam.out) {
+  
+  # Note:
+  # -> Use margin 1 to apply transformation row-by-row
+  # -> Use arg.lis[[1]]=NULL as dummy for dat.fra
+  
+  # # Checks:
+  # dat.fra <- data.all.df
+  # arg.lis <- list(X=NULL, MARGIN=2, FUN="L0h.fun", h=1)
+  # col.nam.sel <- paste0("V", seq(1,97))
+  # col.nam.out <- paste0("V", seq(1,97),"_h_L1")
+  
+  
+  
+  # add dat.fra as first element to list
+  arg.lis[[1]] <- dat.fra
+  # select columns of dat.fra
+  dat.fra <- arg.lis[[1]]
+  arg.lis[[1]] <- subset(arg.lis[[1]],select=col.nam.sel)
+
+  # do.call(apply,args=arg.lis) # core
+  res <- cbind(dat.fra,
+               setNames(
+                 as.data.frame(
+                   do.call(
+                     apply,args=arg.lis)),col.nam.out))
+  
+  return(res)
+  
+}
+
+
 
 #..................................................
 # Load data and estimated factors ----
@@ -180,203 +226,14 @@ data.all.ts <- window(data.all.ts, start = c(1959, 3), end = c(2017, 4))
 # corresponding date
 date <- seq.Date(from = as.Date("1959-07-01"), to = as.Date("2017-10-01"), by = "quarter")
 
-# transform to data frame
-data.all.df <- data.frame(date = date,
-                          year = lubridate::year(date),
-                          quarter = lubridate::quarter(date),
-                          GDP     = as.numeric(data.all.ts[,2]),
-                          F1      = as.numeric(data.all.ts[,5]),
-                          F2      = as.numeric(data.all.ts[,6]),
-                          F3      = as.numeric(data.all.ts[,7]),
-                          F4      = as.numeric(data.all.ts[,8]))
-
-# .......................................................
-# POOS Analysis ----
-
-FVAR_POOS_function <- function(h, print = FALSE) {
-  
-  data.h.all <-  data.all.df %>%
-    mutate(GDPGR_h = (400/h) * (log(GDP / lag(GDP, h))),
-           GDPGR_h_L1 = lag(log(GDP / lag(GDP, 1)), h),
-           GDPGR_h_L2 = lag(log(GDP / lag(GDP, 1)), h + 1),
-           F1_h_L1 = lag(F1, h),
-           F2_h_L1 = lag(F2, h),
-           F3_h_L1 = lag(F3, h),
-           F4_h_L1 = lag(F4, h),
-           CONST = 1) %>%
-    dplyr::select(date, GDPGR_h, GDPGR_h_L1, GDPGR_h_L2, F1_h_L1, F2_h_L1, F3_h_L1, F4_h_L1, CONST)
-  
-  #..................................................
-  # Prepare periods and POOS-analysis-index-s (see S&W, 2020, p. 575) ----
-  
-  # complete period
-  all.per <- seq.Date(from = as.Date("1981-01-01"), to = as.Date("2017-10-01"), by = "quarter")
-  # estimation period
-  est.per <- seq.Date(from = as.Date("1981-01-01"), to = as.Date("2002-10-01"), by = "quarter")
-  # prediction period
-  pre.per <- seq.Date(from = as.Date("2002-10-01"), to = as.Date("2017-10-01"), by = "quarter")
-  
-  # starting index for estimation/prediction
-  est.sta <- which(all.per %in% as.Date("1981-01-01"))
-  pre.sta <- which(all.per %in% as.Date("2002-10-01"))
-  
-  # starting index for s
-  s.ii.00 <- which(all.per %in% as.Date("2002-10-01"))
-  s.ii.00.h <- s.ii.00 - h
-  
-  # ending index of s
-  s.ii.TT <- which(all.per %in% as.Date("2017-10-01"))
-  s.ii.TT.h <- s.ii.TT - h
-  
-  s.ii.seq.h <- seq(s.ii.00.h, s.ii.TT.h)
-  
-  pre.sta <- pre.sta - 1
-  
-  #..................................................
-  # Prepare object to collect POOS-analysis-results ----
-  
-  y.hat <- matrix(NA, nrow = length(s.ii.seq.h))
-  y.act <- matrix(NA, nrow = length(s.ii.seq.h))
-  u.til <- matrix(NA, nrow = length(s.ii.seq.h))
-  
-  coef.lis <- list() 
-  
-  for (tt in 1:length(s.ii.seq.h)) {
-    
-    # moving POOS-analysis-index-s
-    s.ii <- s.ii.seq.h[tt]
-    
-    # extract data for estimation
-    data.h.tmp <- data.h.all
-    est.dat.tmp <- data.h.tmp %>%
-      filter(date >= all.per[est.sta] & date <= all.per[s.ii])
-    # estimate model
-    coef.tmp <- lm(GDPGR_h ~ GDPGR_h_L1 + GDPGR_h_L2 + F1_h_L1 + F2_h_L1 + F3_h_L1 + F4_h_L1 + CONST - 1,
-                   data = est.dat.tmp)$coefficients
-    coef.lis[[tt]] <- coef.tmp
-    # extract data for prediction Y
-    data.h.tmp <- data.h.all
-    y.pre.dat.tmp <- data.h.tmp %>%
-      filter(date == all.per[pre.sta + tt]) %>%
-      dplyr::select(GDPGR_h)
-    y.act[tt] <- as.numeric(y.pre.dat.tmp)
-    # extract data for prediction X
-    data.h.tmp <- data.h.all
-    X.pre.dat.tmp <- data.h.tmp %>%
-      filter(date == all.per[pre.sta + tt]) %>%
-      dplyr::select(GDPGR_h_L1, GDPGR_h_L2, F1_h_L1, F2_h_L1, F3_h_L1, F4_h_L1, CONST)
-    # predict y
-    y.hat[tt] <- as.numeric(matrix(coef.tmp, nrow = 1)) %*% as.numeric(matrix(X.pre.dat.tmp, ncol = 1))
-    # evaluate prediction
-    u.til[tt] <- y.act[tt] - y.hat[tt]
-    
-    if (print == TRUE) {
-      
-      # print for diagnostics
-      cat(paste0("Step ", tt, " from ", length(s.ii.seq.h), "\n"))
-      cat(paste0("   Estimation: From ", as.Date(all.per[est.sta]), " to ", as.Date(all.per[s.ii]), "\n"))
-      cat(paste0("   Prediction: For ", as.Date(all.per[pre.sta + tt]), "\n"))
-      
-      cat(paste0("  Y: ", y.pre.dat.tmp, "\n"))
-      cat(paste0("  Y (name): ", colnames(y.pre.dat.tmp), "\n"))
-      cat(paste0("  b: ", coef.tmp, "\n"))
-      cat(paste0("  b (name): ", names(coef.tmp), "\n"))
-      cat(paste0("  X: ", X.pre.dat.tmp, "\n"))
-      cat(paste0("  X (name): ", colnames(X.pre.dat.tmp), "\n"))
-      
-    }
-    
-  }
-  
-  MSFE_POOS <- 1/length(u.til[-seq(1,h),]) * sum(u.til[-seq(1,h),]^2)
-  RMSFE_POOS <- sqrt(MSFE_POOS)
-  
-  # returns
-  ret.lis <- list(MSFE_POOS = MSFE_POOS,
-                  RMSFE_POOS = RMSFE_POOS,
-                  data = data,
-                  y.act = y.act,
-                  y.hat = y.hat,
-                  u.til = u.til,
-                  coef.lis = coef.lis)
-  
-}
-
-# # h=1
-# FVAR_POOS_h1 <- FVAR_POOS_function(h = 1, print = FALSE)
-# 
-# print("--------------------------------------------------")
-# print("FVAR POOS for h=1")
-# FVAR_POOS_h1$RMSFE_POOS
-# 
-# # h=4
-# FVAR_POOS_h4 <- FVAR_POOS_function(h = 4, print = FALSE)
-# 
-# print("--------------------------------------------------")
-# print("FVAR POOS for h=4")
-# FVAR_POOS_h4$RMSFE_POOS
-# 
-# # h=8
-# 
-# print("--------------------------------------------------")
-# print("FVAR POOS for h=8")
-# FVAR_POOS_h8 <- FVAR_POOS_function(h = 8, print = FALSE)
-# FVAR_POOS_h8$RMSFE_POOS
-
 #..................................................
 # FVAR Model (recursively estimated factor) ----
-#..................................................
-
-# For a fair comparison the factors have to be estimated recursively
-
-# helper function data preparation 1
-L0h.fun  <- function(x,h) (lag(x, n = h)) # Construct lag h
-
-# helper function data preparation 2
-dat.man.fun.xx <- function(dat.fra, arg.lis, col.nam.sel, col.nam.out){
-  
-  # Note:
-  # -> Use margin 1 to apply transformation row-by-row
-  # -> Use arg.lis[[1]]=NULL as dummy for dat.fra
-  
-  # # Checks:
-  # dat.fra <- data.all.df
-  # # fun.nam <- L.fun
-  # col.nam.sel <- paste0("V", seq(1,97))
-  # col.nam.out <- paste0("V", seq(1,97),"_h_L1")
-  # arg.lis <- list(X=NULL, MARGIN=2, FUN="L0h.fun", h=1)
-  # arg.lis
-  
-  
-  
-  # add dat.fra as first element to list
-  arg.lis[[1]] <- dat.fra
-  # select columns of dat.fra
-  dat.fra <- arg.lis[[1]]
-  arg.lis[[1]] <- subset(arg.lis[[1]],select=col.nam.sel)
-  arg.lis
-  
-  do.call(apply,args=arg.lis)
-  res <- cbind(dat.fra,
-               setNames(
-                 as.data.frame(
-                   do.call(
-                     apply,args=arg.lis)),col.nam.out))
-  
-  # head(res)
-  # 
-  # View(res)
-  # head(res$V10)
-  # head(res$V10_h_L1)
-  
-  return(res)
-  
-}
+# (for a fair comparison the factors have to be estimated recursively)
 
 # target variable and dates (data frame)
 data.01 <- data.frame(date = date,
-                      year = lubridate::year(date),
-                      quarter = lubridate::quarter(date),
+                      year = format(date, "%Y"),
+                      quarter = quarters(date),
                       GDP     = as.numeric(data.all.ts[,2]))
 
 # predictors for factor analysis (matrix/array)
@@ -410,21 +267,22 @@ FVAR_FAIR_POOS_r04_function <- function(data.01, data.02, h, mis.val = TRUE, pri
   F_ALL <- as.data.frame(est.data)
   dat.fra <- F_ALL
   col.nam.sel <- paste0("V", seq(1,NN))
-  col.nam.out <- paste0("V", seq(1,NN),"_h_L1")
-  arg.lis <- list(X=NULL, MARGIN=2, FUN="L0h.fun", h=1)
-  F_ALL <- dat.man.fun.xx(dat.fra, arg.lis, col.nam.sel, col.nam.out)
+  col.nam.out <- paste0("V", seq(1,NN),"_h_l1")
+  arg.lis <- list(X = NULL, MARGIN = 2, FUN = "lag_fun", lag = 1)
+  F_ALL <- dat_man_fun(dat.fra, arg.lis, col.nam.sel, col.nam.out)
   
   
   
   # 2) Prepare data no 2
   
-  data <-  cbind(data.01, F_ALL) %>% # includes GDP, old factors and all variables for factor estimation
-    mutate(GDPGR_h = (400/h) * (log(GDP / lag(GDP, h))),
-           GDPGR_h_L1 = lag(log(GDP / lag(GDP, 1)), h),
-           GDPGR_h_L2 = lag(log(GDP / lag(GDP, 1)), h + 1),
-           CONST = 1)
-
-  tmp <- c("date", "GDPGR", "GDPGR_h", "GDPGR_h_L1", "GDPGR_h_L2", "CONST", paste0("V", seq(1,NN),"_h_L1"))
+  data <- cbind(data.01, F_ALL,
+                data.frame(GDPGR_h = (400/h) * (log(data.01$GDP / lag_fun(data.01$GDP, h))),
+                     GDPGR_h_l1 = lag_fun(log(data.01$GDP / lag_fun(data.01$GDP, 1)), h),
+                     GDPGR_h_l2 = lag_fun(log(data.01$GDP / lag_fun(data.01$GDP, 1)), h + 1),
+                     CONST = 1))
+  
+  
+  tmp <- c("date", "GDPGR", "GDPGR_h", "GDPGR_h_l1", "GDPGR_h_l2", "CONST", paste0("V", seq(1,NN),"_h_l1"))
   ii <- which(colnames(data) %in% tmp)
   data <- data[,ii]
   
@@ -469,11 +327,10 @@ FVAR_FAIR_POOS_r04_function <- function(data.01, data.02, h, mis.val = TRUE, pri
     s.ii <- s.ii.seq.h[tt]
     
     # extract data for estimation
-    est.dat.tmp <- data %>%
-      filter(date >= all.per[est.sta] & date <= all.per[s.ii])
-    
+    est.dat.tmp <- data[which(data$date %in% seq.Date(from = all.per[est.sta], to = all.per[s.ii], by = "quarter")),]
+
     # factor analysis
-    ii <- which(colnames(est.dat.tmp) %in% paste0("V", seq(1,NN),"_h_L1"))
+    ii <- which(colnames(est.dat.tmp) %in% paste0("V", seq(1,NN),"_h_l1"))
     
     if (mis.val == TRUE) {
       
@@ -504,21 +361,17 @@ FVAR_FAIR_POOS_r04_function <- function(data.01, data.02, h, mis.val = TRUE, pri
       
     }
     
-    colnames(F.res) <- c("F01_h_L1","F02_h_L1","F03_h_L1","F04_h_L1")
+    colnames(F.res) <- c("F1_h_l1","F2_h_l1","F3_h_l1","F4_h_l1")
     est.dat.tmp <- cbind(est.dat.tmp, F.res)
     
     # estimate model
-    coef.tmp <- lm(GDPGR_h ~ GDPGR_h_L1 + GDPGR_h_L2 + F01_h_L1 + F02_h_L1 + F03_h_L1 + F04_h_L1 + CONST - 1,
+    coef.tmp <- lm(GDPGR_h ~ GDPGR_h_l1 + GDPGR_h_l2 + F1_h_l1 + F2_h_l1 + F3_h_l1 + F4_h_l1 + CONST - 1,
                    data = est.dat.tmp)$coefficients
     # extract data for prediction Y
-    y.pre.dat.tmp <- data %>%
-      filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h)
+    y.pre.dat.tmp <- data[which(data$date == all.per[pre.sta + tt]), "GDPGR_h"]
     y.act[tt] <- as.numeric(y.pre.dat.tmp)
     # extract data for prediction X
-    X.pre.dat.tmp <- data %>%
-      filter(date == all.per[pre.sta + tt]) %>%
-      select(GDPGR_h_L1, GDPGR_h_L2, CONST)
+    X.pre.dat.tmp <- data[which(data$date == all.per[pre.sta + tt]), c("GDPGR_h_l1", "GDPGR_h_l2", "CONST")]
     X.pre.dat.tmp <- cbind(matrix(X.pre.dat.tmp[-3], nrow = 1), matrix(F.res[nrow(F.res),], nrow = 1), matrix(1, nrow = 1))
     # predict y
     y.hat[tt] <- as.numeric(matrix(coef.tmp, nrow = 1)) %*% as.numeric(matrix(X.pre.dat.tmp, ncol = 1))
@@ -568,17 +421,17 @@ FVAR_FAIR_POOS_r04_function <- function(data.01, data.02, h, mis.val = TRUE, pri
 
 # h=1
 FVAR_FAIR_POOS_r4_h1_01 <- FVAR_FAIR_POOS_r04_function(data.01 = data.01, data.02 = data.02,
-                                                    h = 1, mis.val = TRUE, print = FALSE)
+                                                       h = 1, mis.val = TRUE, print = FALSE)
 FVAR_FAIR_POOS_r4_h1_01$RMSFE_POOS
 
 # h=4
 FVAR_FAIR_POOS_r4_h4_01 <- FVAR_FAIR_POOS_r04_function(data.01 = data.01, data.02 = data.02,
-                                                    h = 4, mis.val = TRUE, print = FALSE)
+                                                       h = 4, mis.val = TRUE, print = FALSE)
 FVAR_FAIR_POOS_r4_h4_01$RMSFE_POOS
 
 # h=8
 FVAR_FAIR_POOS_r4_h8_01 <- FVAR_FAIR_POOS_r04_function(data.01 = data.01, data.02 = data.02,
-                                                    h = 8, mis.val = TRUE, print = FALSE)
+                                                       h = 8, mis.val = TRUE, print = FALSE)
 FVAR_FAIR_POOS_r4_h8_01$RMSFE_POOS
 
 # Analysis based on variables without missing values
