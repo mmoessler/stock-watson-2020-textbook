@@ -32,7 +32,6 @@ inv <- function(x) {
 # R helper function data preparation 1
 lag_fun <- function(x, lag) {
   
-  # x <- data.01$GDP
   # x <- seq(1,10)
   # lag <- 1
   
