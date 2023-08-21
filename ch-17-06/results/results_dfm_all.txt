@@ -1,0 +1,40 @@
+[1] ".................................................."
+[1] "AR(2) model (compare with S&W, 2020, table 17.3, row 1)"
+[1] "AR2.POOS.h1$RMSFE.POOS"
+[1] 2.254444
+[1] "AR2.POOS.h4$RMSFE.POOS"
+[1] 1.905985
+[1] "AR2.POOS.h8$RMSFE.POOS"
+[1] 1.736161
+[1] ".................................................."
+[1] "Non-Recursive Estimation of the Factors based on variables without missing values"
+[1] "FVAR.POOS.r4.h1.01$RMSFE.POOS"
+[1] 2.28947
+[1] "FVAR.POOS.r4.h4.01$RMSFE.POOS"
+[1] 2.070318
+[1] "FVAR.POOS.r4.h8.01$RMSFE.POOS"
+[1] 1.804031
+[1] ".................................................."
+[1] "Non-Recursive Estimation of the Factors based on all variables (compare with S&W, 2020, table 17.3, row 3)"
+[1] "FVAR.POOS.r4.h1.02$RMSFE.POOS"
+[1] 2.1429
+[1] "FVAR.POOS.r4.h4.02$RMSFE.POOS"
+[1] 1.404052
+[1] "FVAR.POOS.r4.h8.02$RMSFE.POOS"
+[1] 1.476732
+[1] ".................................................."
+[1] "Recursive Estimation of the Factors based on variables without missing values"
+[1] "FVAR.POOS.r4.h1.03$RMSFE.POOS"
+[1] 2.280346
+[1] "FVAR.POOS.r4.h4.03$RMSFE.POOS"
+[1] 1.939973
+[1] "FVAR.POOS.r4.h8.03$RMSFE.POOS"
+[1] 1.83768
+[1] ".................................................."
+[1] "Recursive Estimation of the Factors based on all variables"
+[1] "FVAR.POOS.r4.h1.04$RMSFE.POOS"
+[1] 2.321565
+[1] "FVAR.POOS.r4.h4.04$RMSFE.POOS"
+[1] 1.975117
+[1] "FVAR.POOS.r4.h8.04$RMSFE.POOS"
+[1] 1.951296
