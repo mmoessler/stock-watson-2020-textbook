@@ -1,12 +1,8 @@
 
-#..................................................
 # Set-up ----
 rm(list = ls())
 
-# to save the results into .json
-library(jsonlite)
-
-# functions
+# helper functions
 repmat <- function(X, nc) {
   
   # repeat matrix across columns  
