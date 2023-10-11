@@ -45,3 +45,60 @@ where
 \underset{\left(r \times 1\right)}{F_t} &= \underset{\left(r \times r\right)}{\Phi\left(L\right)} \underset{\left(r \times 1\right)}{F_{t-1}} + \underset{\left(r \times q\right)}{G}\underset{\left(q \times 1\right)}{\eta}
 
 \end{align*}
+
+## Estimation
+
+Least-squares problem
+
+\begin{align*}
+
+\underset{F_{1}, F_{2},..., F_{T}, \Lambda}{min} V_{t}\left(\Lambda, F_{t}\right) \\
+
+\underset{F_{1}, F_{2},..., F_{T}, \Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} \left(X_{t} - \Lambda F_{t} \right)^{'}\left(X_{t} - \Lambda F_{t} \right) \\
+
+\text{s.t.} \;\;\; \frac{1}{N} \Lambda^{'}\Lambda = I_{r}
+
+\end{align*}
+
+Minimize over $F_{t}$ given $\Lambda$ results in the LS estimator of regressing $X_{t}$ on $\Lambda$, i.e.,
+
+\begin{align*}
+
+\widehat{F}_{t}\left(\Lambda\right) = \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t}
+
+\end{align*}
+
+Thus, the minimization problem becomes,
+
+\begin{align*}
+
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} \left(X_{t} - \Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \right)^{'}\left(X_{t} - \Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \right) \; \text{(step 1)}
+\\
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} 
+\left(X_{t}^{'} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'} \right)\left(X_{t} - \Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \right)  \; \text{(step 2)}
+\\
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} 
+X_{t}^{'}X_{t} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'} X_{t} + X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \; \text{(step 3)}
+\\
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} 
+X_{t}^{'}X_{t} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'} X_{t} + X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \; \text{(step 4)}
+\\
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} 
+X_{t}^{'}X_{t} - X_{t}^{'}\Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'}X_{t} \; \text{(step 5)}
+\\
+\underset{\Lambda}{min} \frac{1}{NT} \sum_{t=1}^{T} X_{t}^{'}\left(I_{r} - \Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'} \right)X_{t} \; \text{(step 6)}
+
+\end{align*}
+
+Note,
+
+\begin{align*}
+
+\left(I_{r} - \Lambda \left(\Lambda\Lambda^{'}\right)^{-1}\Lambda^{'} \right)X_{t},
+
+\end{align*}
+
+are the residuals of regressing $X_{t}$ on $\Lambda$.
+
+
+
