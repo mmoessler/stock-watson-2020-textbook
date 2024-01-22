@@ -65,6 +65,18 @@ print("--------------------------------------------------")
 print("Estimates AR(2) model (see: S&W, 2020, p. 567)")
 ct.ar02.dynlm
 
+# Use most recent observations
+X1 <- matrix(rev(window(data.all.ts,start=c(2017,2),end=c(2017,3))[,c(5)]),ncol=1)
+XX <- rbind(1, X1)
+# Use coefficients of ar01.dynlm
+bet <- matrix(ar02.dynlm$coefficients,nrow=1)
+# Prediction of 2017 Q4
+for.17.q4.ar02 <- bet %*% XX
+
+print("--------------------------------------------------")
+print("Results forecast based on AR(2) Model (see: S&W, 2020, p. 567)")
+for.17.q4.ar02
+
 # 4.2) ADL Model: 1962-Q1 - 2017-Q3 ----
 adl.dynlm <- dynlm(GDPGR ~ L(GDPGR,1) + L(GDPGR,2) + L(TSpread,1) + L(TSpread,2),
                    data = data.all.ts,
