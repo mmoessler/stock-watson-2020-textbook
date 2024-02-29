@@ -51,7 +51,7 @@ Extension of Part 2 to Part 4 with the estimation of the unobserved factors and 
 
 Note, there are different strategies to estimate the unobserved factors and DFM parameters. In the textbook S&W propose to estimate the unobserved factors by the principal components of the observed variables. 
 
-However, this is only valid when all $NT$ observations are nonmissing, i.e., when the panel is balanced. Stock and Watson (2016) propose an iterative methods oulined in Chapter 2.3.4.1. This is procedure is also used to replicate the results of the textbook.
+However, this is only valid when all $NT$ observations are nonmissing, i.e., when the panel is balanced. Stock and Watson (2016) propose an iterative methods oulined in Chapter 2.3.4.1 and introduced in Stock and Watson (2002). This is procedure is also used to replicate the results of the textbook.
 
 ```
 
@@ -64,6 +64,7 @@ Useful literature:
 * Stock, J. H., & Watson, M. W. (2016). Dynamic factor models, factor-augmented vector autoregressions, and structural vector autoregressions in macroeconomics. In *Handbook of macroeconomics* (Vol. 2, pp. 415-525). Elsevier. *Ch.: 2.3*.
 * Tsay, R. S. (2013). *Multivariate time series analysis: with R and financial applications*. John Wiley & Sons. *Ch.: 6*.
 * Kilian, L., & Lütkepohl, H. (2017). *Structural vector autoregressive analysis*. Cambridge University Press. *Ch.: 16*.
+* Stock, J. H., & Watson, M. W. (2002). Macroeconomic forecasting using diffusion indexes. *Journal of Business & Economic Statistics*, 20(2), 147-162.
 
 # Next Steps
 
