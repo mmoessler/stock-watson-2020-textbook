@@ -70,3 +70,5 @@ Useful literature:
 
 * Use actual PCA to construct/estimate unobserved factors.
 * Replication of the construction of the unbobserved, i.e., estimated factors.
+
+...
