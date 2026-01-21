@@ -122,7 +122,7 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
     
     # 4.1) regression over ns ----
     
-    # regress each of the N columns of X (T x 1) on the (T x r) factor scores (f) to get (N x r) factor loading (lambda)
+    # regress each of the N columns, i.e., X (T x 1) on the (T x r) factor scores (f) to get (N x r) factor loading (lambda)
     for (i in 1:ns) {
       
       tmp <- t(packr(t(cbind(xdata.std[,i, drop = FALSE], fac)))) # note delete rows/t's with NAs
@@ -140,7 +140,7 @@ factor_estimation_ls <- function(xdata, n.fac, nt.min, init = "svd") {
     
     # 4.2) regression over nt ----
     
-    # regress each of the T rows of X (N x 1)  on the (N x r) factor loadings (lambda) to get (N x r) factor scores (f)
+    # regress each of the T rows, i.e., X (N x 1)  on the (N x r) factor loadings (lambda) to get (N x r) factor scores (f)
     for (t in 1:nt) {
       
       tmp <- t(packr(t(cbind(t(xdata.std[t,, drop = FALSE]), lam)))) # note delete columns/i's with NAs
